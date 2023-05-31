@@ -1,0 +1,26 @@
+[
+  {
+    "id": "fa526fb5-4f0d-4a04-bda9-4fef9ae3c745",
+    "category": "classic",
+    "name": "doe",
+    "author": "john",
+    "about": "english writer",
+    "year": "18th century"
+  },
+  {
+    "id": "1",
+    "category": "new",
+    "name": "doe",
+    "author": "john",
+    "about": "english writer",
+    "year": "18th century"
+  },
+  {
+    "id": "277c901f-f3d0-490d-a49d-e33ab2d17061",
+    "category": "new",
+    "name": "shekspir",
+    "author": "john",
+    "about": "english writer",
+    "year": "18th century"
+  }
+]
