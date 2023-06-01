@@ -1,20 +1,5 @@
 [
-  {
-    "id": "1",
-    "category": "classic",
-    "name": "shekspir",
-    "author": "john",
-    "about": "english writer",
-    "year": "18th century"
-  },
-  {
-    "id": "2",
-    "category": "classic",
-    "name": "shekspir",
-    "author": "john",
-    "about": "english writer",
-    "year": "18th century"
-  },
+     
   {
     "id": "fd63de2a-7e5c-4e33-85d9-08dabdcc6405",
     "category": "coding",
