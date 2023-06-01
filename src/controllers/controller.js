@@ -39,50 +39,52 @@ const create = async (req, res) => {
     const {name, category, author, about, year} = req.body
 
     const readData = await librauriy.read()
-
-    const id = uuid()
-
-    const imageName = `${uuid()}.${
-        image.name.split(".")[image.name.split(".").length - 1]
-          }`;
-
-    image.mv(path.join(process.cwd(), "uploads", imageName))
-
-    const data = new Module(id, name, category, author, about, year, imageName)
-    const newData = readData.length ? [...readData, data] : [data]
+   
     const foundName = readData.find( (books) => books.name == name)
     const foundAthuor = readData.find( (books) => books.author == author)
 
     if(!foundAthuor || !foundName) {
-    await librauriy.write(newData)
-    }   
+        const id = uuid()
 
-    const categoryData = await fs.readFile(path.join( process.cwd() , "database", "category.json"))
-    const read =  categoryData.length ? JSON.parse(categoryData) : [];
+        const imageName = `${uuid()}.${
+            image.name.split(".")[image.name.split(".").length - 1]
+              }`;
+
+        image.mv(path.join(process.cwd(), "uploads", imageName))
+    
+        const data = new Module(id, name, category, author, about, year, imageName)
+        const newData = readData.length ? [...readData, data] : [data]
+
+        await librauriy.write(newData)
+    }   else {
+    res.status(201).json({message: "this book already exist"})
+    }
+
+    const read = await librauriy.readId()
     const found = read.find( (user) => user.category == category)
     if(!found) {
-
             const id = uuid()
             const newData = read.length ? [...read, {id, category}] : [{id, category}]
-            await fs.writeFile(path.join(process.cwd(), "database", "category.json"), JSON.stringify(newData, null, 2), "utf-8")
-        
-
+            await fs.writeFile(path.join(process.cwd(), "database", "category.json"), JSON.stringify(newData, null, 2), "utf-8")    
     }
-    res.status(200).json({message: "succers", newData})
-
+    res.status(201).json({message: "success",})
 }
 
 
 const del = async (req, res) => {
     const books = await librauriy.read()
     const { id } = req.body
-    const foundId =  await books.find((user) => user.id == id) 
-    
-    console.log(books);
+    // const foundId =  await books.find((user) => user.id == id) 
+    // console.log(typeof books);
+    for(let i = 0; i < books.length; i++) {
+        if(books[i].id === id) {
+         const data = books.indexOf(books[i]) 
+         books.splice(data, 1)   
 
-    res.status(201).json({message: "provided id is not aqual to any book's id"})
-    
-    
+        res.status(401).json({message: "deleted", books})
+        }
+    }
+    res.status(401).json({message: "provided id is not aqual to any book's id"})   
 }
 
 module.exports = {
